@@ -122,7 +122,8 @@ penguins %>%
 
 : Six ways data can be wrong — and the plot that catches each {#tbl-datachecks}
 
+# your turn
 
-
+Use this link to access a [Posit Cloud project](https://posit.cloud/content/12942403) where you can try this out with your own data. Use script_your_data.R to read your data and play around with plotting to check your data and tell your story. All the packages you need are already installed. Just sign up for a Cloud account using your email account. 
 
 

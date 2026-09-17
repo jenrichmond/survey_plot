@@ -69,3 +69,6 @@ Making a scatterplot of variables you expect to be correlated and colouring poin
 | **Impossible together** | Are any values wrong *in combination*? | `Plots Scatter` |
 
 : Six ways data can be wrong — and the plot that catches each {#tbl-datachecks}
+
+
+

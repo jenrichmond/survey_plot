@@ -1,0 +1,148 @@
+# ggplot
+
+## why not a bar plot?
+
+Published psychology articles are full of bar plots with standard error bars. Why? 
+
+### bar plots are good because they...
+
+- show differences in the mean between groups
+- give your reader an idea of whether group might be significant
+
+
+### bar plots are bad because they...
+
+- can make wildly different data look similar
+- hide bimodal, skew, outliers, ceiling/floor effects
+
+![](barbar.jpeg)
+
+Your marker will have lots of boring bar plots in their pile.  What if your plots were more interesting and informative?
+
+Choosing a plot to tell a story about your data depends on on your question. Plotting the raw data, alongside summary stats is the most transparent approach. Here are some alternative options. 
+
+## load packages
+
+```{r}
+#| message: false
+#| warning: false
+library(tidyverse)
+library(ggrain)
+library(ggeasy)
+
+```
+
+## read data
+
+```{r}
+#| message: false
+#| warning: false
+
+penguins <- read_csv(here::here("penguins.csv"))
+
+
+```
+
+
+# plot options
+
+## scatterplot
+
+If your question is primarily about the relation between variables, or how things are correlated, a scatter plot might be useful. Remember that you can color points by a 3rd variable. 
+
+### basic plot
+
+```{r}
+#| message: false
+#| warning: false
+
+penguins %>%
+  ggplot(aes(x = body_mass_g, 
+             y = bill_length_mm, 
+             colour = sex)) +
+  geom_point()
+
+```
+
+### thesis worthy
+
+```{r}
+#| message: false
+#| warning: false
+penguins %>%
+  ggplot(aes(x = body_mass_g, 
+             y = bill_length_mm, 
+             colour = sex)) +
+  geom_point() +
+   theme_classic() +
+  labs(x = "Body Mass (g)", y = "Bill length (mm)") +
+  easy_x_axis_labels_size(size = 12) +
+  easy_y_axis_labels_size(size = 12) +
+  easy_all_text_size(size = 14) 
+```
+
+### export
+
+Save your plot as a .png file to insert into your thesis. 
+
+```{r}
+#| message: false
+#| warning: false
+ggsave("penguin_scatter.png")
+
+```
+
+
+## raincloud plots
+
+If your question is about group differences, you can illustrate how your groups differ usinga raincloud plot, which combines summary stats (median & quartiles), the shape of the distribution (density plot), and raw points in a single plot. 
+
+
+### basic plot
+
+```{r}
+#| message: false
+#| warning: false
+#| 
+penguins %>%
+  ggplot(aes(x = species, 
+             y = flipper_length_mm, 
+             fill = species)) +
+  geom_rain()  
+```
+
+
+### thesis worthy
+
+Remove the legend, fix the theme to be more APAesque, add dot transparency, add x and y axis labels, fix the text size. 
+
+```{r}
+#| message: false
+#| warning: false
+penguins %>%
+  ggplot(aes(x = species, 
+             y = flipper_length_mm, 
+             fill = species)) +
+  geom_rain(alpha = 0.5) + #a dd transparency
+  guides(fill = "none") + # remove the legend
+  theme_classic() +
+  labs(x = "Penguin Species", y = "Flipper length (mm)") +
+  easy_x_axis_labels_size(size = 12) +
+  easy_y_axis_labels_size(size = 12) +
+  easy_all_text_size(size = 14) 
+
+  
+```
+
+### export
+
+Save your plot as a .png file to insert into your thesis. 
+
+```{r}
+#| message: false
+#| warning: false
+ggsave("penguin_rain.png")
+
+```
+
+

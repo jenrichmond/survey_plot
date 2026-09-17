@@ -1,0 +1,128 @@
+
+# ggplot
+
+When you are checking your data for distribution problems and data entry errors, quick and dirty plots are the way to go. Packages like `DataExplorer` and `skimr` have great functions to make quick exploratory plots. `ggplot` allows you more control over plot components. 
+
+At this stage we are looking for 
+
+1. missingness
+2. weird distributions
+3. values that could be errors
+
+# set up
+
+## load packages
+```{r}
+#| message: false
+#| warning: false
+#| 
+library(tidyverse) # includes `ggplot`
+library(DataExplorer)
+library(skimr)
+
+```
+
+## read data
+
+```{r}
+
+penguins <- read_csv(here::here("messy_penguins.csv"))
+
+```
+
+
+# run checks
+
+## find missingness
+
+```{r}
+
+plot_missing(penguins)
+
+```
+
+
+## check shape
+
+The `skim()` function from the `skimr` package includes "sparkline" histograms in its summary stat table. `plot_histogram` from the `DataExplorer` package will plot a histogram for all numeric variables in a dataset. And if you need to look at one more closely, the base R `hist()` function is useful. 
+```{r}
+
+
+skim(penguins)
+
+plot_histogram(penguins)
+
+
+hist(penguins$flipper_length_mm)
+
+
+```
+
+## find errors
+
+### categorical
+
+To catch coding errors, plot categorical variables as a bar plot. Extra categories misspelled cells will reveal themselves. 
+
+```{r}
+
+plot_bar(penguins)
+
+```
+
+
+### numeric
+
+To catch other data entry errors, plot the raw data, first as a box plot and then with jittered points overlaid. Look for impossible values. 
+
+```{r}
+#| message: false
+#| warning: false
+
+penguins %>%
+  ggplot(aes(x = species, y = flipper_length_mm)) +
+  geom_boxplot() 
+
+
+penguins %>%
+  ggplot(aes(x = species, y = flipper_length_mm)) +
+  geom_boxplot(outlier.shape = NA) +
+  geom_jitter(width = 0.2)
+
+
+```
+
+
+Making a scatterplot of variables you expect to be correlated and colouring points by another variable can make data entry errors stick out too. 
+
+```{r}
+#| message: false
+#| warning: false
+penguins %>%
+  ggplot(aes(x = flipper_length_mm, y = body_mass_g, colour = species)) +
+  geom_point() +
+  labs(title= "A very heavy chinstrap and an Adelie with flippers that are too long")
+```
+
+
+> *Note `DataExplorer::create_report(df)` automagically creates a report that includes lots of data checks. They won't all be relevant to all projects, but it is a good quick and dirty way to get many of the plots you need to check your data*
+
+
+# summary
+
+| The check | The question you're asking | The plot |
+|:----------|:---------------------------|:---------|
+| **Missing** | What isn't here — and is it random or patterned? | `plot_missing()` / `vis_miss()` |
+| **Mis-shaped** | What shape is each variable? Skew, ceiling/floor, bimodality? | `skim()`, then `plot_histogram()` |
+| **Mis-coded** | Are the categories consistent, or full of typos and stray levels? | bar plot (`plot_bar`) |
+| **Impossible** | Are any values out of bounds on their own? | box and jitter (`geom_boxplot()` + `geom_point()`)  |
+| **Impossible together** | Are any values wrong *in combination*? | scatterplot (`geom_point`) |
+
+
+
+: Six ways data can be wrong — and the plot that catches each {#tbl-datachecks}
+
+
+
+
+

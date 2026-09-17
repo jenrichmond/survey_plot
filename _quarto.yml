@@ -1,0 +1,21 @@
+project:
+  type: book
+book:
+  title: "plotting for survey research"
+  author: "Jenny Richmond, Ph.D"
+  chapters:
+    - index.qmd
+    - part: "check your data"
+      chapters:
+        - checks_ggplot.qmd
+        - checks_jamovi.qmd
+    - part: "tell a story"
+      chapters:
+        - story_ggplot.qmd
+        - story_jamovi.qmd
+format:
+  html:
+    toc: true
+    number-sections: FALSE
+    
+ 

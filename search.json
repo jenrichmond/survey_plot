@@ -1,0 +1,219 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "plotting for survey research",
+    "section": "",
+    "text": "why plot your data?\nPsychology students often complain about research methods courses. Psych programs make students do a lot of research methods and yet, when they get to Honours and are running their own project, students are often unprepared for the realities of dealing with real data.\nResearch methods courses largely focus on teaching students how to design experiments and do inferential analysis. Students learn a lot about how to run and interpret statistical tests, but often very little about the process of getting real data ready for analysis. The toy datasets used in these courses are clean and tidy, seldom violate assumptions or contain errors and almost remove the need to plot. For Psych students, data visualisation is often an after thought.\nThis is not your fault. Research methods lecturers and research supervisors just teach you what they know. But if you want your thesis to stand out of your marker’s pile, investing some time in plotting your data will pay off.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>why plot your data?</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#check-your-data",
+    "href": "index.html#check-your-data",
+    "title": "plotting for survey research",
+    "section": "check your data",
+    "text": "check your data\n\nsummary statistics can hide wildly different distributions\nerrors (impossible values, coding issues) become visible\nyou can see the shape (skew, outliers, bimodality, ceiling/floor effects)",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>why plot your data?</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#tell-your-story",
+    "href": "index.html#tell-your-story",
+    "title": "plotting for survey research",
+    "section": "tell your story",
+    "text": "tell your story\n\na good figure makes your effect obvious, it is easier for your marker to digest than a table, or summary stats in the text\na figure that presents your findings transparently will make your thesis stand out in your marker’s pile\n\nThis resource is designed to walk you through the process of making plots that check your data for errors and produce plots that tell your story. You can choose to use the open source GUI-based software JAMOVI, in combinatinon with the vijPlots module, or to use the ggplot package in RStudio.\n```",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>why plot your data?</span>"
+    ]
+  },
+  {
+    "objectID": "checks_ggplot.html",
+    "href": "checks_ggplot.html",
+    "title": "ggplot",
+    "section": "",
+    "text": "set up\nWhen you are checking your data for distribution problems and data entry errors, quick and dirty plots are the way to go. Packages like DataExplorer and skimr have great functions to make quick exploratory plots. ggplot allows you more control over plot components.\nAt this stage we are looking for",
+    "crumbs": [
+      "check your data",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>ggplot</span>"
+    ]
+  },
+  {
+    "objectID": "checks_ggplot.html#load-packages",
+    "href": "checks_ggplot.html#load-packages",
+    "title": "ggplot",
+    "section": "load packages",
+    "text": "load packages\n\nlibrary(tidyverse) # includes `ggplot`\nlibrary(DataExplorer)\nlibrary(skimr)",
+    "crumbs": [
+      "check your data",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>ggplot</span>"
+    ]
+  },
+  {
+    "objectID": "checks_ggplot.html#read-data",
+    "href": "checks_ggplot.html#read-data",
+    "title": "ggplot",
+    "section": "read data",
+    "text": "read data\n\npenguins &lt;- read_csv(here::here(\"messy_penguins.csv\"))\n\nRows: 344 Columns: 8\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr (3): species, island, sex\ndbl (5): bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g, year\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.",
+    "crumbs": [
+      "check your data",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>ggplot</span>"
+    ]
+  },
+  {
+    "objectID": "checks_ggplot.html#find-missingness",
+    "href": "checks_ggplot.html#find-missingness",
+    "title": "ggplot",
+    "section": "find missingness",
+    "text": "find missingness\n\nplot_missing(penguins)",
+    "crumbs": [
+      "check your data",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>ggplot</span>"
+    ]
+  },
+  {
+    "objectID": "checks_ggplot.html#check-shape",
+    "href": "checks_ggplot.html#check-shape",
+    "title": "ggplot",
+    "section": "check shape",
+    "text": "check shape\nThe skim() function from the skimr package includes “sparkline” histograms in its summary stat table. plot_histogram from the DataExplorer package will plot a histogram for all numeric variables in a dataset. And if you need to look at one more closely, the base R hist() function is useful.\n\nskim(penguins)\n\n\nData summary\n\n\nName\npenguins\n\n\nNumber of rows\n344\n\n\nNumber of columns\n8\n\n\n_______________________\n\n\n\nColumn type frequency:\n\n\n\ncharacter\n3\n\n\nnumeric\n5\n\n\n________________________\n\n\n\nGroup variables\nNone\n\n\n\nVariable type: character\n\n\n\n\n\n\n\n\n\n\n\n\n\nskim_variable\nn_missing\ncomplete_rate\nmin\nmax\nempty\nn_unique\nwhitespace\n\n\n\n\nspecies\n0\n1.00\n6\n9\n0\n3\n0\n\n\nisland\n0\n1.00\n5\n9\n0\n4\n0\n\n\nsex\n11\n0.97\n1\n6\n0\n4\n0\n\n\n\nVariable type: numeric\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nskim_variable\nn_missing\ncomplete_rate\nmean\nsd\np0\np25\np50\np75\np100\nhist\n\n\n\n\nbill_length_mm\n2\n0.99\n43.92\n5.46\n32.1\n39.23\n44.45\n48.50\n59.6\n▃▇▇▆▁\n\n\nbill_depth_mm\n2\n0.99\n17.15\n1.97\n13.1\n15.60\n17.30\n18.70\n21.5\n▅▅▇▇▂\n\n\nflipper_length_mm\n2\n0.99\n201.03\n14.14\n172.0\n190.00\n197.00\n213.75\n231.0\n▂▇▃▅▃\n\n\nbody_mass_g\n2\n0.99\n4208.04\n807.60\n2700.0\n3550.00\n4050.00\n4768.75\n6300.0\n▃▇▆▃▂\n\n\nyear\n0\n1.00\n2008.03\n0.82\n2007.0\n2007.00\n2008.00\n2009.00\n2009.0\n▇▁▇▁▇\n\n\n\n\nplot_histogram(penguins)\n\n\n\n\n\n\n\nhist(penguins$flipper_length_mm)",
+    "crumbs": [
+      "check your data",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>ggplot</span>"
+    ]
+  },
+  {
+    "objectID": "checks_ggplot.html#find-errors",
+    "href": "checks_ggplot.html#find-errors",
+    "title": "ggplot",
+    "section": "find errors",
+    "text": "find errors\n\ncategorical\nTo catch coding errors, plot categorical variables as a bar plot. Extra categories misspelled cells will reveal themselves.\n\nplot_bar(penguins)\n\n\n\n\n\n\n\n\n\n\nnumeric\nTo catch other data entry errors, plot the raw data, first as a box plot and then with jittered points overlaid. Look for impossible values.\n\npenguins %&gt;%\n  ggplot(aes(x = species, y = flipper_length_mm)) +\n  geom_boxplot() \n\n\n\n\n\n\n\npenguins %&gt;%\n  ggplot(aes(x = species, y = flipper_length_mm)) +\n  geom_boxplot(outlier.shape = NA) +\n  geom_jitter(width = 0.2)\n\n\n\n\n\n\n\n\nMaking a scatterplot of variables you expect to be correlated and colouring points by another variable can make data entry errors stick out too.\n\npenguins %&gt;%\n  ggplot(aes(x = flipper_length_mm, y = body_mass_g, colour = species)) +\n  geom_point() +\n  labs(title= \"A very heavy chinstrap and an Adelie with flippers that are too long\")\n\n\n\n\n\n\n\n\n\nNote DataExplorer::create_report(df) automagically creates a report that includes lots of data checks. They won’t all be relevant to all projects, but it is a good quick and dirty way to get many of the plots you need to check your data",
+    "crumbs": [
+      "check your data",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>ggplot</span>"
+    ]
+  },
+  {
+    "objectID": "checks_jamovi.html",
+    "href": "checks_jamovi.html",
+    "title": "jamovi",
+    "section": "",
+    "text": "run checks\nWhen you are checking your data for distribution problems and data entry errors, quick and dirty plots are the way to go. There are modules available to install that go beyond the basic plots in the Exploration/Descriptives tab. Use the BIG + button in the top right corner to install the surveymv module.\nAt this stage we are looking for",
+    "crumbs": [
+      "check your data",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>jamovi</span>"
+    ]
+  },
+  {
+    "objectID": "checks_jamovi.html#find-missingness",
+    "href": "checks_jamovi.html#find-missingness",
+    "title": "jamovi",
+    "section": "find missingness",
+    "text": "find missingness\nJAMOVI is not as good as DataExplorer at allowing you to visualise missing values. Using the surveymv module, you can plot the frequencies for categorical variables and if you untick the option to hide missing values, it will include missing as a bar on your plot.\n\n\nnote: this is a good way to find coding errors too\n\nFor numeric variables, you will need to use the Descriptives tab to get a table of summary stats, which includes missingness.",
+    "crumbs": [
+      "check your data",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>jamovi</span>"
+    ]
+  },
+  {
+    "objectID": "checks_jamovi.html#check-shape",
+    "href": "checks_jamovi.html#check-shape",
+    "title": "jamovi",
+    "section": "check shape",
+    "text": "check shape\nTo check the distribution of numeric variables you typically want to use a histogram. You can find this option in Descriptives -&gt; Plots",
+    "crumbs": [
+      "check your data",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>jamovi</span>"
+    ]
+  },
+  {
+    "objectID": "checks_jamovi.html#find-errors",
+    "href": "checks_jamovi.html#find-errors",
+    "title": "jamovi",
+    "section": "find errors",
+    "text": "find errors\n\ncategorical\nTo catch coding errors, plot categorical variables as a bar plot. As described above, the surveymv module allows you to plot nominal/ordinal data as a grouped or stacked bar. Extra categories and misspelled cells will reveal themselves.\n\n\nnumeric\nTo catch other data entry errors, choose Descriptives and plot the raw data, first as a box plot…\n\n… and then with jittered points overlaid. Look for impossible values.\n\n\nnote: these box plots seem to mislabel outliers\n\nMaking a scatterplot of variables you expect to be correlated and colouring points by another variable can make data entry errors stick out too. You can do this by choosing Plots -&gt; Scatter",
+    "crumbs": [
+      "check your data",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>jamovi</span>"
+    ]
+  },
+  {
+    "objectID": "story_ggplot.html",
+    "href": "story_ggplot.html",
+    "title": "ggplot",
+    "section": "",
+    "text": "why not a bar plot?\nPublished psychology articles are full of bar plots with standard error bars. Why?",
+    "crumbs": [
+      "tell a story",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>ggplot</span>"
+    ]
+  },
+  {
+    "objectID": "story_ggplot.html#why-not-a-bar-plot",
+    "href": "story_ggplot.html#why-not-a-bar-plot",
+    "title": "ggplot",
+    "section": "",
+    "text": "bar plots are good because they…\n\nshow differences in the mean between groups\ngive your reader an idea of whether group might be significant\n\n\n\nbar plots are bad because they…\n\ncan make wildly different data look similar\nhide bimodal, skew, outliers, ceiling/floor effects\n\n\nYour marker will have lots of boring bar plots in their pile. What if your plots were more interesting and informative?\nChoosing a plot to tell a story about your data depends on on your question. Plotting the raw data, alongside summary stats is the most transparent approach. Here are some alternative options.",
+    "crumbs": [
+      "tell a story",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>ggplot</span>"
+    ]
+  },
+  {
+    "objectID": "story_ggplot.html#load-packages",
+    "href": "story_ggplot.html#load-packages",
+    "title": "ggplot",
+    "section": "load packages",
+    "text": "load packages\n\nlibrary(tidyverse)\nlibrary(ggrain)\nlibrary(ggeasy)",
+    "crumbs": [
+      "tell a story",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>ggplot</span>"
+    ]
+  },
+  {
+    "objectID": "story_ggplot.html#read-data",
+    "href": "story_ggplot.html#read-data",
+    "title": "ggplot",
+    "section": "read data",
+    "text": "read data\n\npenguins &lt;- read_csv(here::here(\"penguins.csv\"))",
+    "crumbs": [
+      "tell a story",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>ggplot</span>"
+    ]
+  },
+  {
+    "objectID": "story_ggplot.html#scatterplot",
+    "href": "story_ggplot.html#scatterplot",
+    "title": "ggplot",
+    "section": "scatterplot",
+    "text": "scatterplot\nIf your question is primarily about the relation between variables, or how things are correlated, a scatter plot might be useful. Remember that you can color points by a 3rd variable.\n\nbasic plot\n\npenguins %&gt;%\n  ggplot(aes(x = body_mass_g, \n             y = bill_length_mm, \n             colour = sex)) +\n  geom_point()\n\n\n\n\n\n\n\n\n\n\nthesis worthy\n\npenguins %&gt;%\n  ggplot(aes(x = body_mass_g, \n             y = bill_length_mm, \n             colour = sex)) +\n  geom_point() +\n   theme_classic() +\n  labs(x = \"Body Mass (g)\", y = \"Bill length (mm)\") +\n  easy_x_axis_labels_size(size = 12) +\n  easy_y_axis_labels_size(size = 12) +\n  easy_all_text_size(size = 14) \n\n\n\n\n\n\n\n\n\n\nexport\nSave your plot as a .png file to insert into your thesis.\n\nggsave(\"penguin_scatter.png\")",
+    "crumbs": [
+      "tell a story",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>ggplot</span>"
+    ]
+  },
+  {
+    "objectID": "story_ggplot.html#raincloud-plots",
+    "href": "story_ggplot.html#raincloud-plots",
+    "title": "ggplot",
+    "section": "raincloud plots",
+    "text": "raincloud plots\nIf your question is about group differences, you can illustrate how your groups differ usinga raincloud plot, which combines summary stats (median & quartiles), the shape of the distribution (density plot), and raw points in a single plot.\n\nbasic plot\n\npenguins %&gt;%\n  ggplot(aes(x = species, \n             y = flipper_length_mm, \n             fill = species)) +\n  geom_rain()  \n\n\n\n\n\n\n\n\n\n\nthesis worthy\nRemove the legend, fix the theme to be more APAesque, add dot transparency, add x and y axis labels, fix the text size.\n\npenguins %&gt;%\n  ggplot(aes(x = species, \n             y = flipper_length_mm, \n             fill = species)) +\n  geom_rain(alpha = 0.5) + #a dd transparency\n  guides(fill = \"none\") + # remove the legend\n  theme_classic() +\n  labs(x = \"Penguin Species\", y = \"Flipper length (mm)\") +\n  easy_x_axis_labels_size(size = 12) +\n  easy_y_axis_labels_size(size = 12) +\n  easy_all_text_size(size = 14) \n\n\n\n\n\n\n\n\n\n\nexport\nSave your plot as a .png file to insert into your thesis.\n\nggsave(\"penguin_rain.png\")",
+    "crumbs": [
+      "tell a story",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>ggplot</span>"
+    ]
+  },
+  {
+    "objectID": "story_jamovi.html",
+    "href": "story_jamovi.html",
+    "title": "jamovi",
+    "section": "",
+    "text": "To be continued…",
+    "crumbs": [
+      "tell a story",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>jamovi</span>"
+    ]
+  }
+]

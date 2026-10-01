@@ -29,6 +29,7 @@ Choosing a plot to tell a story about your data depends on on your question. Plo
 library(tidyverse)
 library(ggrain)
 library(ggeasy)
+library(ggcorrplot)
 
 ```
 
@@ -93,6 +94,65 @@ ggsave("penguin_scatter.png")
 ```
 
 
+
+
+# heatmap
+
+If your questions is about how strongly variables are related, it can be useful to visualise that in a heatmap using the `ggcorrplot` package.
+
+In the case of the penguin data, we might be interested in how the penguins body measurements correlate. 
+
+
+
+## basic plot
+
+
+```{r}
+
+# select variables
+
+penguin_measurements <- penguins %>%
+  select(starts_with("bill"), starts_with("flipper"), body_mass_g)
+
+# get correlation matrix
+
+corr <- cor(penguin_measurements, 
+             method = "pearson",
+                   use = "pairwise.complete.obs")
+
+
+# plot the matrix as a heat map
+
+ggcorrplot(corr)
+
+```
+
+## thesis worthy
+
+Make the heatmap display only the upper triangle, print the R values in the tiles, remove legend, and adjust colour scheme. 
+
+```{r}
+ggcorrplot(corr,
+    type = "upper",       # show upper triangle only (alt options "full", "lower")
+    lab = TRUE, # print correlation values
+    show.legend = FALSE, # remove legend
+    colors = c("#0072B2", "white", "#D55E00"))  #adjust colours
+        
+
+```
+
+
+
+## export
+
+```{r}
+#| message: false
+#| warning: false
+ggsave("heatmap.png")
+```
+
+
+
 ## raincloud plots
 
 If your question is about group differences, you can illustrate how your groups differ usinga raincloud plot, which combines summary stats (median & quartiles), the shape of the distribution (density plot), and raw points in a single plot. 
@@ -144,6 +204,7 @@ Save your plot as a .png file to insert into your thesis.
 ggsave("penguin_rain.png")
 
 ```
+
 
 
 # your turn

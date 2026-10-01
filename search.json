@@ -24,7 +24,7 @@
     "href": "index.html#tell-your-story",
     "title": "plotting for survey research",
     "section": "tell your story",
-    "text": "tell your story\n\na good figure makes your effect obvious, it is easier for your marker to digest than a table, or summary stats in the text\na figure that presents your findings transparently will make your thesis stand out in your marker’s pile\n\nThis resource is designed to walk you through the process of making plots that check your data for errors and produce plots that tell your story. You can choose to use the open source GUI-based software JAMOVI, in combinatinon with the vijPlots module, or to use the ggplot package in RStudio.\n```",
+    "text": "tell your story\n\na good figure makes your effect obvious, it is easier for your marker to digest than a table, or summary stats in the text\na figure that presents your findings transparently will make your thesis stand out in your marker’s pile\n\nThis resource is designed to walk you through the process of making plots that check your data for errors and produce plots that tell your story. You can choose to use the open source GUI-based software JAMOVI, in combinatinon with the vijPlots module, or to use the ggplot package in RStudio.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>why plot your data?</span>"
     ]
@@ -166,7 +166,7 @@
     "href": "story_ggplot.html#load-packages",
     "title": "ggplot",
     "section": "load packages",
-    "text": "load packages\n\nlibrary(tidyverse)\nlibrary(ggrain)\nlibrary(ggeasy)",
+    "text": "load packages\n\nlibrary(tidyverse)\nlibrary(ggrain)\nlibrary(ggeasy)\nlibrary(ggcorrplot)",
     "crumbs": [
       "tell a story",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>ggplot</span>"
@@ -189,6 +189,39 @@
     "title": "ggplot",
     "section": "scatterplot",
     "text": "scatterplot\nIf your question is primarily about the relation between variables, or how things are correlated, a scatter plot might be useful. Remember that you can color points by a 3rd variable.\n\nbasic plot\n\npenguins %&gt;%\n  ggplot(aes(x = body_mass_g, \n             y = bill_length_mm, \n             colour = sex)) +\n  geom_point()\n\n\n\n\n\n\n\n\n\n\nthesis worthy\n\npenguins %&gt;%\n  ggplot(aes(x = body_mass_g, \n             y = bill_length_mm, \n             colour = sex)) +\n  geom_point() +\n   theme_classic() +\n  labs(x = \"Body Mass (g)\", y = \"Bill length (mm)\") +\n  easy_x_axis_labels_size(size = 12) +\n  easy_y_axis_labels_size(size = 12) +\n  easy_all_text_size(size = 14) \n\n\n\n\n\n\n\n\n\n\nexport\nSave your plot as a .png file to insert into your thesis.\n\nggsave(\"penguin_scatter.png\")",
+    "crumbs": [
+      "tell a story",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>ggplot</span>"
+    ]
+  },
+  {
+    "objectID": "story_ggplot.html#basic-plot-1",
+    "href": "story_ggplot.html#basic-plot-1",
+    "title": "ggplot",
+    "section": "basic plot",
+    "text": "basic plot\n\n# select variables\n\npenguin_measurements &lt;- penguins %&gt;%\n  select(starts_with(\"bill\"), starts_with(\"flipper\"), body_mass_g)\n\n# get correlation matrix\n\ncorr &lt;- cor(penguin_measurements, \n             method = \"pearson\",\n                   use = \"pairwise.complete.obs\")\n\n\n# plot the matrix as a heat map\n\nggcorrplot(corr)",
+    "crumbs": [
+      "tell a story",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>ggplot</span>"
+    ]
+  },
+  {
+    "objectID": "story_ggplot.html#thesis-worthy-1",
+    "href": "story_ggplot.html#thesis-worthy-1",
+    "title": "ggplot",
+    "section": "thesis worthy",
+    "text": "thesis worthy\nMake the heatmap display only the upper triangle, print the R values in the tiles, remove legend, and adjust colour scheme.\n\nggcorrplot(corr,\n    type = \"upper\",       # show upper triangle only (alt options \"full\", \"lower\")\n    lab = TRUE, # print correlation values\n    show.legend = FALSE, # remove legend\n    colors = c(\"#0072B2\", \"white\", \"#D55E00\"))  #adjust colours",
+    "crumbs": [
+      "tell a story",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>ggplot</span>"
+    ]
+  },
+  {
+    "objectID": "story_ggplot.html#export-1",
+    "href": "story_ggplot.html#export-1",
+    "title": "ggplot",
+    "section": "export",
+    "text": "export\n\nggsave(\"heatmap.png\")",
     "crumbs": [
       "tell a story",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>ggplot</span>"

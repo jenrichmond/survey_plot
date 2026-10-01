@@ -1,6 +1,6 @@
 # survey_plot
 
-This repo contains materials for Plotting for Survey Research, a session designed to show how to use data visualisation to check your data for problems and tell a story about results. 
+This repo contains materials for Plotting for Survey Research, a session designed to show how to use data visualisation to check your data for problems and tell a story about results. The resource is deplyed via github pages and lives online at https://jenrichmond.github.io/survey_plot/
 
 The resource document gives you both code and code-free options for making great plots. 
 

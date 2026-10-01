@@ -28,5 +28,3 @@ This resource is designed to walk you through the process of making plots that c
 
 
 
-```
-

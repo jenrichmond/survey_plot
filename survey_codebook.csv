@@ -1,0 +1,21 @@
+item,subscale,scale,reverse,text
+swim_1,Swimming Confidence,agreement,FALSE,I feel fast and agile in the water.
+swim_2,Swimming Confidence,agreement,FALSE,I am comfortable diving to great depths.
+swim_3,Swimming Confidence,agreement,FALSE,I can outswim a leopard seal if I need to.
+swim_4,Swimming Confidence,agreement,TRUE,I find long foraging trips exhausting.
+island_1,Island Satisfaction,agreement,FALSE,I am happy with the fishing near my island.
+island_2,Island Satisfaction,agreement,FALSE,I would recommend my island to other penguins.
+island_3,Island Satisfaction,agreement,FALSE,My island has good nesting sites.
+island_4,Island Satisfaction,agreement,TRUE,I have thought about moving to a different island.
+climate_1,Climate Worry,agreement,FALSE,I have noticed changes in sea ice since I was a chick.
+climate_2,Climate Worry,agreement,FALSE,I worry about finding enough krill in the future.
+climate_3,Climate Worry,agreement,FALSE,I am concerned about the future of my species.
+climate_4,Climate Worry,agreement,TRUE,Things will turn out fine for penguins like me.
+conflict_1,Colony Conflict,frequency,FALSE,How often do you squabble with your neighbours?
+conflict_2,Colony Conflict,frequency,FALSE,How often do you steal pebbles from other nests?
+conflict_3,Colony Conflict,frequency,FALSE,How often do other penguins steal your pebbles?
+conflict_4,Colony Conflict,frequency,TRUE,How often do you feel at peace in the colony?
+social_1,Social Support,frequency,FALSE,How often does your partner take their turn on the egg?
+social_2,Social Support,frequency,FALSE,How often do you huddle with others to keep warm?
+social_3,Social Support,frequency,FALSE,How often do you feel part of the colony?
+social_4,Social Support,frequency,TRUE,How often do you feel left out at the edge of the group?

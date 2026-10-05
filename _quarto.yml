@@ -17,5 +17,5 @@ format:
   html:
     toc: true
     number-sections: FALSE
+    output-toggle: true
     
- 

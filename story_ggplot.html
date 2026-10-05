@@ -217,17 +217,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#thesis-worthy" id="toc-thesis-worthy" class="nav-link" data-scroll-target="#thesis-worthy">thesis worthy</a></li>
   <li><a href="#export" id="toc-export" class="nav-link" data-scroll-target="#export">export</a></li>
   </ul></li>
-  </ul></li>
   <li><a href="#heatmap" id="toc-heatmap" class="nav-link" data-scroll-target="#heatmap">heatmap</a>
   <ul class="collapse">
   <li><a href="#basic-plot-1" id="toc-basic-plot-1" class="nav-link" data-scroll-target="#basic-plot-1">basic plot</a></li>
   <li><a href="#thesis-worthy-1" id="toc-thesis-worthy-1" class="nav-link" data-scroll-target="#thesis-worthy-1">thesis worthy</a></li>
   <li><a href="#export-1" id="toc-export-1" class="nav-link" data-scroll-target="#export-1">export</a></li>
+  </ul></li>
   <li><a href="#raincloud-plots" id="toc-raincloud-plots" class="nav-link" data-scroll-target="#raincloud-plots">raincloud plots</a>
   <ul class="collapse">
   <li><a href="#basic-plot-2" id="toc-basic-plot-2" class="nav-link" data-scroll-target="#basic-plot-2">basic plot</a></li>
   <li><a href="#thesis-worthy-2" id="toc-thesis-worthy-2" class="nav-link" data-scroll-target="#thesis-worthy-2">thesis worthy</a></li>
   <li><a href="#export-2" id="toc-export-2" class="nav-link" data-scroll-target="#export-2">export</a></li>
+  </ul></li>
+  <li><a href="#likert-plot" id="toc-likert-plot" class="nav-link" data-scroll-target="#likert-plot">likert plot</a>
+  <ul class="collapse">
+  <li><a href="#basic-plot-3" id="toc-basic-plot-3" class="nav-link" data-scroll-target="#basic-plot-3">basic plot</a></li>
+  <li><a href="#thesis-worthy-3" id="toc-thesis-worthy-3" class="nav-link" data-scroll-target="#thesis-worthy-3">thesis worthy</a></li>
+  <li><a href="#making-lots-of-plots" id="toc-making-lots-of-plots" class="nav-link" data-scroll-target="#making-lots-of-plots">making lots of plots</a></li>
+  <li><a href="#plots-by-group" id="toc-plots-by-group" class="nav-link" data-scroll-target="#plots-by-group">plots by group</a></li>
+  <li><a href="#export-3" id="toc-export-3" class="nav-link" data-scroll-target="#export-3">export</a></li>
   </ul></li>
   </ul></li>
   <li><a href="#your-turn" id="toc-your-turn" class="nav-link" data-scroll-target="#your-turn">your turn</a></li>
@@ -281,9 +289,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="load-packages">load packages</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrain)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggeasy)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggcorrplot)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrain) <span class="co"># for raincloud plots</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggeasy) <span class="co"># for making ggplot adjustments easy</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggcorrplot) <span class="co"># for correlation heatmaps</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggstats) <span class="co"># for likert plots</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(labelled) <span class="co"># for adding labels to variables</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="read-data" class="level2">
@@ -300,7 +310,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="basic-plot" class="level3">
 <h3 class="anchored" data-anchor-id="basic-plot">basic plot</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, </span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> bill_length_mm, </span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">colour =</span> sex)) <span class="sc">+</span></span>
@@ -317,7 +327,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="thesis-worthy" class="level3">
 <h3 class="anchored" data-anchor-id="thesis-worthy">thesis worthy</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, </span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> bill_length_mm, </span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">colour =</span> sex)) <span class="sc">+</span></span>
@@ -344,17 +354,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 </section>
-</section>
-<section id="heatmap" class="level1">
-<h1>heatmap</h1>
+<section id="heatmap" class="level2">
+<h2 class="anchored" data-anchor-id="heatmap">heatmap</h2>
 <p>If your questions is about how strongly variables are related, it can be useful to visualise that in a heatmap using the <code>ggcorrplot</code> package.</p>
 <p>In the case of the penguin data, we might be interested in how the penguins body measurements correlate.</p>
-<section id="basic-plot-1" class="level2">
-<h2 class="anchored" data-anchor-id="basic-plot-1">basic plot</h2>
+<section id="basic-plot-1" class="level3">
+<h3 class="anchored" data-anchor-id="basic-plot-1">basic plot</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># select variables</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>penguin_measurements <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>penguin_measurements <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">"bill"</span>), <span class="fu">starts_with</span>(<span class="st">"flipper"</span>), body_mass_g)</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># get correlation matrix</span></span>
@@ -376,8 +385,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="thesis-worthy-1" class="level2">
-<h2 class="anchored" data-anchor-id="thesis-worthy-1">thesis worthy</h2>
+<section id="thesis-worthy-1" class="level3">
+<h3 class="anchored" data-anchor-id="thesis-worthy-1">thesis worthy</h3>
 <p>Make the heatmap display only the upper triangle, print the R values in the tiles, remove legend, and adjust colour scheme.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggcorrplot</span>(corr,</span>
@@ -394,11 +403,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="export-1" class="level2">
-<h2 class="anchored" data-anchor-id="export-1">export</h2>
+<section id="export-1" class="level3">
+<h3 class="anchored" data-anchor-id="export-1">export</h3>
+<p>Save your plot as a .png file to insert into your thesis.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"heatmap.png"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+</section>
 </section>
 <section id="raincloud-plots" class="level2">
 <h2 class="anchored" data-anchor-id="raincloud-plots">raincloud plots</h2>
@@ -406,7 +417,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="basic-plot-2" class="level3">
 <h3 class="anchored" data-anchor-id="basic-plot-2">basic plot</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> species, </span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> flipper_length_mm, </span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">fill =</span> species)) <span class="sc">+</span></span>
@@ -424,7 +435,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="thesis-worthy-2">thesis worthy</h3>
 <p>Remove the legend, fix the theme to be more APAesque, add dot transparency, add x and y axis labels, fix the text size.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> species, </span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> flipper_length_mm, </span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">fill =</span> species)) <span class="sc">+</span></span>
@@ -449,6 +460,195 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Save your plot as a .png file to insert into your thesis.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"penguin_rain.png"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="likert-plot" class="level2">
+<h2 class="anchored" data-anchor-id="likert-plot">likert plot</h2>
+<p>Data from Likert scales is ordinal, not numeric. What is the difference?</p>
+<p>For ordinal data, there is an order to it, but the gaps between each level aren’t necessarily equal. For example, we know that <em>Strongly Agree</em> is greater than <em>Agree</em>, but we can’t be sure that the difference between the two is the same as the difference between <em>Neither agree nor disagree</em> and <em>Agree</em>.</p>
+<p>In contrast, for numeric data we know that the distance between consecutive units is the same. A 3200 g penguin is bigger than a 3000 g penguin. That difference is the same as two penguins who are 2500 g and 2700 g.</p>
+<p>It is really common for Likert scales to be labelled with numeric values (5 = Strongly Agree, 1 = Strongly Disagree) and then those labels are analysed as if they were numeric, despite the fact the values represent only order. This can be problematic (see paper by <a href="https://papers.ssrn.com/sol3/Delivery.cfm?abstractid=2692323">Liddell &amp; Kruschke, 2018</a>)</p>
+<p>In terms of data visualisation, it can be more illuminating to plot the distribution of responses across levels of your scale, than to plot differences in average scores (which much like the #barbarplot argument above can be generated by many different patterns of data).</p>
+<p>I asked Claude to imagine that penguins could talk and to generate plausible survey responses from penguins in the Palmer dataset. They were asked questions about their swimming confidence, island preferences, climate anxiety, colony conflict and social support.</p>
+<blockquote class="blockquote">
+<p>This data is generated by AI. Penguins don’t answer survey questions.</p>
+</blockquote>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>survey <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"penguins_survey.csv"</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>codebook <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"survey_codebook.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The first thing to note is that R thinks all the survey items are characters (i.e.&nbsp;text). We know that they are ordered so want to convert to factors. We can do that in a single step using the <code>across()</code> function.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>agree_levels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Strongly disagree"</span>, <span class="st">"Disagree"</span>, <span class="st">"Neither agree nor disagree"</span>,</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Agree"</span>, <span class="st">"Strongly agree"</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>freq_levels  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Never"</span>, <span class="st">"Rarely"</span>, <span class="st">"Sometimes"</span>, <span class="st">"Often"</span>, <span class="st">"Always"</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># across the range of variable, apply factor to each one (.x) using levels agree vs freq</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>survey <span class="ot">&lt;-</span> survey <span class="sc">|&gt;</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="fu">across</span>(swim_1<span class="sc">:</span>climate_4, <span class="sc">~</span> <span class="fu">factor</span>(.x, <span class="at">levels =</span> agree_levels)),</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>                <span class="fu">across</span>(conflict_1<span class="sc">:</span>social_4, <span class="sc">~</span><span class="fu">factor</span>(.x, <span class="at">levels =</span> freq_levels)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="basic-plot-3" class="level3">
+<h3 class="anchored" data-anchor-id="basic-plot-3">basic plot</h3>
+<p>The <code>gglikert</code> function from the <code>ggstats</code> package plots the distribution of scale responses.</p>
+<p>It is also useful to be able to use the question text as a axis label rather than the less meaningful variable name. The <code>labelled</code> package makes it easy to add variable labels from a codebook</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add variable labels from codebook</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>item_labels <span class="ot">&lt;-</span> codebook <span class="sc">|&gt;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(item, text) <span class="sc">|&gt;</span> </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">deframe</span>() <span class="sc">|&gt;</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.list</span>()</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="fu">var_label</span>(survey) <span class="ot">&lt;-</span> item_labels</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co"># look_for(survey) prints a nice (but long) labelling summary</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="fu">gglikert</span>(survey, <span class="at">include =</span> swim_1<span class="sc">:</span>swim_4)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="story_ggplot_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="thesis-worthy-3" class="level3">
+<h3 class="anchored" data-anchor-id="thesis-worthy-3">thesis worthy</h3>
+<p>To make it thesis worthy, you might ike to sort the items by agreement level, add totals for strongly agree + agree and strongly disagree and disagree, change the colour scheme and add a caption that notes the reverse scored item is presented as given.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gglikert</span>(survey,</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">include =</span> swim_1<span class="sc">:</span>swim_4,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">sort =</span> <span class="st">"ascending"</span>,          <span class="co"># order items by level of agreement</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">add_totals =</span> <span class="cn">TRUE</span>,           <span class="co"># % disagree / % agree at each end</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">labels_hide_below =</span> <span class="fl">0.05</span>,    <span class="co"># drop clutter from tiny segments</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">y_label_wrap =</span> <span class="dv">30</span>) <span class="sc">+</span>         <span class="co"># wrap long item wording</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Swimming"</span>,</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"swim_4 (foraging) is reversed; responses shown as given"</span>) <span class="sc">+</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"RdBu"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="story_ggplot_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="making-lots-of-plots" class="level3">
+<h3 class="anchored" data-anchor-id="making-lots-of-plots">making lots of plots</h3>
+<p>If you have a plot of plots to make, lets say one for each subscale, make a function. Here we are writing a function that takes items and a title as arguments. The details of the function live inside the curly brackets {}.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>plot_subscale <span class="ot">&lt;-</span> <span class="cf">function</span>(items, title) {</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gglikert</span>(survey, <span class="at">include =</span> {{ items }},</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">sort =</span> <span class="st">"ascending"</span>, <span class="at">add_totals =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">labels_hide_below =</span> <span class="fl">0.05</span>, <span class="at">y_label_wrap =</span> <span class="dv">40</span>) <span class="sc">+</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> title) <span class="sc">+</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"RdBu"</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">swimming</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">island</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">climate</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false" href="">conflict</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-5" role="tab" aria-controls="tabset-1-5" aria-selected="false" href="">social</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_subscale</span>(swim_1<span class="sc">:</span>swim_4, <span class="st">"Swimming"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="story_ggplot_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_subscale</span>(island_1<span class="sc">:</span>island_4, <span class="st">"Island"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="story_ggplot_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a> <span class="fu">plot_subscale</span>(climate_1<span class="sc">:</span>climate_4, <span class="st">"Climate"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="story_ggplot_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_subscale</span>(conflict_1<span class="sc">:</span>conflict_4, <span class="st">"Conflict"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="story_ggplot_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-5-tab">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_subscale</span>(social_1<span class="sc">:</span>social_4, <span class="st">"Social"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="story_ggplot_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="plots-by-group" class="level3">
+<h3 class="anchored" data-anchor-id="plots-by-group">plots by group</h3>
+<p>If you are interested in the distribution of responses as a function of group, you can facet by group using facet_rows.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gglikert</span>(survey,</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">include =</span> swim_1<span class="sc">:</span>swim_4,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">sort =</span> <span class="st">"ascending"</span>, </span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">"species"</span>,</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">facet_rows =</span> <span class="fu">vars</span>(.question),</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">facet_label_wrap =</span> <span class="dv">25</span>, <span class="co"># how many char before label warp</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">add_totals =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> </span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>         <span class="fu">theme</span>(<span class="at">strip.background   =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"white"</span>, <span class="at">colour =</span> <span class="cn">NA</span>),</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">strip.text.y.right =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">0</span>, <span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">hjust =</span> <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Swimming"</span>,</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Note: swim_4 (foraging) is reversed; responses shown as given"</span>) <span class="sc">+</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"RdBu"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="story_ggplot_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="export-3" class="level3">
+<h3 class="anchored" data-anchor-id="export-3">export</h3>
+<p>Save your plot as a .png file to insert into your thesis.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"penguin_likert.png"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 </section>
